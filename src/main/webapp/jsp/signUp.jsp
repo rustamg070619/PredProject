@@ -12,7 +12,7 @@
     <title>Title</title>
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
-<body><form method="post" action="/addUser">
+<body><form method="post" action="<c:url value="/addUser"/>">
     <label for="firstName">Имя
         <input type="text" id="firstName" name="firstName" required placeholder="Ваше имя">
     </label>

@@ -2,7 +2,6 @@ package servlet;
 
 import model.User;
 import service.UserService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +12,9 @@ import java.sql.SQLException;
 
 @WebServlet("/update")
 public class UpdateServlet extends HttpServlet {
+
+    private UserService userService = UserService.getInstance();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -21,7 +23,7 @@ public class UpdateServlet extends HttpServlet {
         if (req.getParameter("put") == null) {
             id = Long.parseLong(req.getParameter("id"));
             try {
-                User updated = new UserService().getUserById(id);
+                User updated = userService.getUserById(id);
                 req.setAttribute("id", id);
                 req.setAttribute("firstName", updated.getFirstName());
                 req.setAttribute("lastName", updated.getLastName());
@@ -36,7 +38,7 @@ public class UpdateServlet extends HttpServlet {
             String firstName = req.getParameter("firstName");
             String lastName = req.getParameter("lastName");
             User updated = new User(id, firstName, lastName);
-            new UserService().updateUser(updated);
+            userService.updateUser(updated);
             req.getServletContext().getRequestDispatcher("/home").forward(req, resp);
             resp.setStatus(200);
         }

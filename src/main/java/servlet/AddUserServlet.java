@@ -2,7 +2,6 @@ package servlet;
 
 import model.User;
 import service.UserService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +11,8 @@ import java.io.IOException;
 
 @WebServlet("/addUser")
 public class AddUserServlet extends HttpServlet {
+    private UserService userService = UserService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -24,9 +25,7 @@ public class AddUserServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
-        String characterEncoding = req.getCharacterEncoding();
-        User addedUser = new User(firstName, lastName);
-        new UserService().addUser(addedUser);
+        userService.addUser(new User(firstName, lastName));
         req.getServletContext().getRequestDispatcher("/home").forward(req, resp);
         resp.setStatus(200);
     }

@@ -2,7 +2,6 @@ package servlet;
 
 import model.User;
 import service.UserService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +13,14 @@ import java.util.List;
 
 @WebServlet("/")
 public class HomeServlet extends HttpServlet {
+
+    private UserService userService = UserService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.setCharacterEncoding("UTF-8");
-            List<User> users = new UserService().getAllUser();
+            List<User> users = userService.getAllUser();
             req.setAttribute("usersFromServer", users);
             req.getServletContext().getRequestDispatcher("/jsp/home.jsp").forward(req, resp);
             resp.setStatus(200);
@@ -31,7 +33,7 @@ public class HomeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.setCharacterEncoding("UTF-8");
-            List<User> users = new UserService().getAllUser();
+            List<User> users = userService.getAllUser();
             req.setAttribute("usersFromServer", users);
             req.getServletContext().getRequestDispatcher("/jsp/home.jsp").forward(req, resp);
             resp.setStatus(200);

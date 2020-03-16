@@ -17,7 +17,7 @@
 <c:set scope="request" var="userFirstName" value="${firstName}"/>
 <c:set scope="request" var="userLastName" value="${lastName}"/>
 
-<form method="post" action="/update">
+<form method="post" action="<c:url value="/update"/>">
     <label for="firstName">Имя
         <input type="hidden" name="id" value="${id}">
         <input type="hidden" name="put" value="put">

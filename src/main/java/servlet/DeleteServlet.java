@@ -2,7 +2,6 @@ package servlet;
 
 import model.User;
 import service.UserService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,13 +12,16 @@ import java.sql.SQLException;
 
 @WebServlet("/delete")
 public class DeleteServlet extends HttpServlet {
+
+    private UserService userService = UserService.getInstance();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         Long id = Long.parseLong(req.getParameter("id"));
         try {
-            User user = new UserService().getUserById(id);
-            new UserService().deleteUser(user);
+            User user = userService.getUserById(id);
+            userService.deleteUser(user);
             req.getServletContext().getRequestDispatcher("/home").forward(req, resp);
             resp.setStatus(200);
         } catch (SQLException e) {
